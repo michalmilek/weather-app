@@ -7,74 +7,22 @@ import AcUnitIcon from "@mui/icons-material/AcUnit";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 import axios from "axios";
-import { object, weatherTest } from "../data/test";
-import { useEffect, useRef, useState } from "react";
+import { object } from "../data/test";
+import { useEffect } from "react";
 
 interface Props {
   searchValue: string;
   setSearchValue: React.Dispatch<React.SetStateAction<string>>;
   data: any;
   setData: any;
-  location: any;
-  setLocation: any;
-  weather: any;
-  setWeather: any;
 }
 
-const Navbar = ({
-  searchValue,
-  setSearchValue,
-  data,
-  setData,
-  location,
-  setLocation,
-  weather,
-  setWeather,
-}: Props) => {
+const Navbar = ({ searchValue, setSearchValue, data, setData }: Props) => {
   const productionBuild = true;
-  const [searchOn, setSearchOn] = useState(false);
-  const completeRef = useRef<HTMLDivElement>();
-
-  useEffect(() => {
-    let handler = (e): any => {
-      if (completeRef.current) {
-        if (!completeRef.current.contains(e.target)) {
-          setSearchOn(false);
-        }
-      }
-    };
-
-    document.addEventListener("mousedown", handler);
-
-    return () => {
-      document.removeEventListener("mousedown", handler);
-    };
-  });
 
   useEffect(() => {
     console.log(data);
   }, [data]);
-
-  useEffect(() => {
-    const getWeather = async () => {
-      try {
-        const response = await axios.get(
-          `https://api.openweathermap.org/data/2.5/weather?lat=${location.lat}&lon=${location.lon}&appid=${process.env.REACT_APP_API_KEY}`
-        );
-        console.log(response);
-        setWeather(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    //getWeather();
-    setWeather(weatherTest);
-    console.log(weather);
-  }, [location, setWeather, weather]);
-
-  useEffect(() => {
-    console.log(searchOn);
-  }, [searchOn]);
 
   const getData = async () => {
     try {
@@ -120,14 +68,8 @@ const Navbar = ({
           <TextField
             id="search-bar"
             className="text"
-            autoComplete="off"
             value={searchValue}
-            onFocus={() => setSearchOn(true)}
-            onChange={(e) => {
-              setSearchValue(e.target.value);
-              searchValue.length >= 2 &&
-                (productionBuild ? setData(object.data) : getData());
-            }}
+            onChange={(e) => setSearchValue(e.target.value)}
             label="Enter a city name"
             variant="outlined"
             placeholder="Search..."
@@ -191,48 +133,28 @@ const Navbar = ({
             }}>
             <SearchIcon style={{ fill: "white" }} />
           </IconButton>
-          {Object.keys(data).length !== 0 && searchOn && (
-            <Box
-              ref={completeRef}
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                position: "absolute",
-                top: "100%",
-                left: 0,
-                background: "white",
-                width: "100%",
-                textAlign: "left",
-                pt: 2,
-              }}>
-              {data?.map((item): any => (
-                <>
-                  <Typography
-                    onClick={() =>
-                      setLocation({
-                        lat: item.lat,
-                        lon: item.lon,
-                        name: item.name,
-                        country: item.country,
-                        state: item.state,
-                      })
-                    }
-                    sx={{
-                      pl: 3,
-                      color: "gold",
-                      transition: "all 0.2s ease",
-                      "&:hover": {
-                        background: "#24adf180",
-                      },
-                    }}
-                    variant="body1"
-                    paragraph>
-                    {item.name}, {item.country}, {item.state}
-                  </Typography>
-                </>
-              ))}
-            </Box>
-          )}
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              position: "absolute",
+              top: "120%",
+              left: 0,
+              background: "white",
+              width: "100%",
+              textAlign: "left",
+            }}>
+            {data?.map((item): any => (
+              <Typography
+                sx={{
+                  color: "gold",
+                }}
+                variant="body1"
+                paragraph>
+                {item.name}, {item.country}, {item.state}
+              </Typography>
+            ))}
+          </Box>
         </Box>
 
         <Tabs sx={{ color: "white" }}>

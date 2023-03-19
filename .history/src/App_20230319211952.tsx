@@ -25,7 +25,6 @@ function App() {
       <MainContent
         data={data}
         location={location}
-        weather={weather}
       />
     </div>
   );

@@ -209,13 +209,7 @@ const Navbar = ({
                 <>
                   <Typography
                     onClick={() =>
-                      setLocation({
-                        lat: item.lat,
-                        lon: item.lon,
-                        name: item.name,
-                        country: item.country,
-                        state: item.state,
-                      })
+                      setLocation({ lat: item.lat, lon: item.lon })
                     }
                     sx={{
                       pl: 3,
