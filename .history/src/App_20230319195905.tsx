@@ -8,7 +8,6 @@ function App() {
   const [searchValue, setSearchValue] = useState("");
   const [data, setData] = useState({});
   const [location, setLocation] = useState({});
-  const [weather, setWeather] = useState({});
 
   return (
     <div className="App">
@@ -19,14 +18,8 @@ function App() {
         setData={setData}
         location={location}
         setLocation={setLocation}
-        weather={weather}
-        setWeather={setWeather}
       />
-      <MainContent
-        data={data}
-        location={location}
-        weather={weather}
-      />
+      <MainContent data={data} />
     </div>
   );
 }

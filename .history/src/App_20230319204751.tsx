@@ -22,11 +22,7 @@ function App() {
         weather={weather}
         setWeather={setWeather}
       />
-      <MainContent
-        data={data}
-        location={location}
-        weather={weather}
-      />
+      <MainContent data={data} />
     </div>
   );
 }

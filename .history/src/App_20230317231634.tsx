@@ -6,26 +6,17 @@ import Navbar from "./components/Navbar";
 
 function App() {
   const [searchValue, setSearchValue] = useState("");
-  const [data, setData] = useState({});
-  const [location, setLocation] = useState({});
-  const [weather, setWeather] = useState({});
+  const [data, setData] = useState(null);
 
   return (
     <div className="App">
       <Navbar
         searchValue={searchValue}
         setSearchValue={setSearchValue}
-        data={data}
-        setData={setData}
-        location={location}
-        setLocation={setLocation}
-        weather={weather}
-        setWeather={setWeather}
       />
       <MainContent
         data={data}
-        location={location}
-        weather={weather}
+        setData={setData}
       />
     </div>
   );

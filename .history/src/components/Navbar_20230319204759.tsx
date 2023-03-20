@@ -7,7 +7,7 @@ import AcUnitIcon from "@mui/icons-material/AcUnit";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 import axios from "axios";
-import { object, weatherTest } from "../data/test";
+import { object } from "../data/test";
 import { useEffect, useRef, useState } from "react";
 
 interface Props {
@@ -56,21 +56,8 @@ const Navbar = ({
   }, [data]);
 
   useEffect(() => {
-    const getWeather = async () => {
-      try {
-        const response = await axios.get(
-          `https://api.openweathermap.org/data/2.5/weather?lat=${location.lat}&lon=${location.lon}&appid=${process.env.REACT_APP_API_KEY}`
-        );
-        console.log(response);
-        setWeather(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    //getWeather();
-    setWeather(weatherTest);
-    console.log(weather);
-  }, [location, setWeather, weather]);
+    console.log(location);
+  }, [location]);
 
   useEffect(() => {
     console.log(searchOn);
@@ -83,6 +70,18 @@ const Navbar = ({
       );
       console.log(response);
       setData(response);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const getWeather = async () => {
+    try {
+      const response = await axios.get(
+        `https://api.openweathermap.org/data/3.0/onecall?lat=${location.lat}&lon=${location.lat}&appid=${process.env.REACT_APP_API_KEY}`
+      );
+      console.log(response);
+      setWeather(response);
     } catch (error) {
       console.error(error);
     }
@@ -209,13 +208,7 @@ const Navbar = ({
                 <>
                   <Typography
                     onClick={() =>
-                      setLocation({
-                        lat: item.lat,
-                        lon: item.lon,
-                        name: item.name,
-                        country: item.country,
-                        state: item.state,
-                      })
+                      setLocation({ lat: item.lat, lon: item.lon })
                     }
                     sx={{
                       pl: 3,

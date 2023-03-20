@@ -69,8 +69,7 @@ const Navbar = ({
     };
     //getWeather();
     setWeather(weatherTest);
-    console.log(weather);
-  }, [location, setWeather, weather]);
+  }, [location, setWeather]);
 
   useEffect(() => {
     console.log(searchOn);
@@ -209,13 +208,7 @@ const Navbar = ({
                 <>
                   <Typography
                     onClick={() =>
-                      setLocation({
-                        lat: item.lat,
-                        lon: item.lon,
-                        name: item.name,
-                        country: item.country,
-                        state: item.state,
-                      })
+                      setLocation({ lat: item.lat, lon: item.lon })
                     }
                     sx={{
                       pl: 3,

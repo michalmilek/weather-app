@@ -47,9 +47,15 @@ const MainContent = ({ data, location, weather }: any) => {
           {today.toLocaleDateString("en-GB", options)}
         </Typography>
         {Object.keys(weather.data).length !== 0 && (
-          <Box>
+          <>
             <Typography>Temperature: {weather.data.main.temp}</Typography>
-          </Box>
+            <Typography>
+              Max temperature: {weather.data.main.temp_max}
+            </Typography>
+            <Typography>
+              Min temperature: {weather.data.main.temp_min}
+            </Typography>
+          </>
         )}
       </Box>
     </>
