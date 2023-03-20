@@ -62,9 +62,14 @@ const MainContent = ({
             : day.main.temp
         )
       );
-  }
- 
 
+    /* console.log(daysMonthsArray);
+        
+        //day.main.temp
+        console.log(tempArray); */
+  }
+  console.log(daysMonthsArray);
+  console.log(tempArray);
   const data1 = {
     labels: daysMonthsArray,
     datasets: [
