@@ -69,7 +69,7 @@ const MainContent = ({
     labels: daysMonthsArray,
     datasets: [
       {
-        label: `Temperature °${currentTemp}`,
+        label: "Temperature",
         data: tempArray,
         backgroundColor: "aqua",
         borderColor: "black",

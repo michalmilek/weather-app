@@ -13,7 +13,6 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { KelvinToCelsius, KelvinToFahrenheit } from "../../utils/unitConvert";
 
 export interface Options {
   day: "numeric";
@@ -43,34 +42,16 @@ const MainContent = ({
     ?.filter((day: any) => day.dt_txt.includes("12:00:00"))
     .map((day: any) => day.dt_txt);
 
-  const daysArray = days?.map((dateString: string) => new Date(dateString));
-  const daysMonthsArray = daysArray.map(
-    (date: Date) => `${date.getDate() + ".0" + (date.getMonth() + 1)}`
-  );
+  const daysDate = days?.myDates.map(Date);
 
-  const tempArray = upcomingDays?.data?.list
-    ?.filter((day: any) => day.dt_txt.includes("12:00:00"))
-    .map((day: any) =>
-      Math.round(
-        currentTemp === "C"
-          ? KelvinToCelsius(day.main.temp)
-          : currentTemp === "F"
-          ? KelvinToFahrenheit(day.main.temp)
-          : day.main.temp
-      )
-    );
-
-  console.log(daysMonthsArray);
-
-  //day.main.temp
-  console.log(tempArray);
+  console.log(daysDate);
 
   const data1 = {
-    labels: daysMonthsArray,
+    labels: ["20", "21", "22", "23", "24"],
     datasets: [
       {
-        label: `Temperature °${currentTemp}`,
-        data: tempArray,
+        label: "Temperature",
+        data: [3, 6, 9],
         backgroundColor: "aqua",
         borderColor: "black",
         borderWidth: 1,

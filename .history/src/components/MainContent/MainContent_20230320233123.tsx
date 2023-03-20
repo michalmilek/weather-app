@@ -4,7 +4,7 @@ import Image1 from "./Image1.jpg";
 import Typography from "@mui/material/Typography";
 import SmallCard from "../SmallCard";
 import MainCard from "../MainCard";
-import { Bar } from "react-chartjs-2";
+//import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   BarElement,
@@ -158,9 +158,9 @@ const MainContent = ({
               cursor: "pointer",
             }}>
             <Box>
-              <Bar
+              {/* <Bar
                 data={data1}
-                options={options}></Bar>
+                options={options}></Bar> */}
             </Box>
 
             {upcomingDays?.data?.list
