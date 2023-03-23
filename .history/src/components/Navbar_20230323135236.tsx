@@ -79,7 +79,6 @@ const Navbar = ({
   return (
     <AppBar
       sx={{
-        padding: "0 400px 0 20px",
         minHeight: "50px",
         maxWidth: "100vw",
         background: "#147FF1",
@@ -93,7 +92,6 @@ const Navbar = ({
         <Link
           sx={{
             textDecoration: "none",
-            color: "white",
           }}
           href={"/"}>
           <Typography
@@ -177,6 +175,21 @@ const Navbar = ({
           data={data}
           handleLocation={handleLocation}
         />
+
+        <Tabs
+          value={false}
+          sx={{ color: "white" }}>
+          <Tab
+            value={1}
+            sx={{ color: "inherit" }}
+            label="Home"
+          />
+          <Tab
+            value={2}
+            sx={{ color: "inherit" }}
+            label="About"
+          />
+        </Tabs>
       </Toolbar>
     </AppBar>
   );

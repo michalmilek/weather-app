@@ -23,7 +23,7 @@ function App() {
 
   const handleData = useMemo(
     () =>
-      debounce((response: LocationResponseInterface[]) => {
+      debounce((response: LocationResponseInterface) => {
         setData(response);
       }, 200),
     []

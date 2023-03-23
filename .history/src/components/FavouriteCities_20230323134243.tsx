@@ -28,7 +28,7 @@ const FavouriteCities = ({ cities, removeCity, currentTemp }: Props) => {
     <Box
       sx={{
         display: "flex",
-        flexDirection: "column",
+        flexDirection: { md: "column", lg: "row" },
         gap: "30px",
         marginTop: "60px",
       }}>
@@ -49,37 +49,29 @@ const FavouriteCities = ({ cities, removeCity, currentTemp }: Props) => {
           alignItems: "center",
           gap: "40px",
         }}>
-        <Box
-          sx={{
-            display: "flex",
-            gap: "20px",
-            alignItems: "center",
-            justifyContent: "center",
-            flexDirection: { md: "column", lg: "row" },
-          }}>
-          {cities.length !== 0 ? (
-            Object.keys(cities).length !== 0 &&
-            cities?.map((city: CitiesInterface, index: number) => (
-              <FavouriteCity
-                key={city.city}
-                city={city}
-                removeCity={removeCity}
-                index={index}
-                currentTemp={currentTemp}
-              />
-            ))
-          ) : (
-            <Typography
-              variant="h4"
-              sx={{
-                color: "white",
-                fontWeight: 600,
-                fontSize: "20px",
-              }}>
-              Add your favourite city/cities
-            </Typography>
-          )}
-        </Box>
+        {cities.length !== 0 ? (
+          Object.keys(cities).length !== 0 &&
+          cities?.map((city: CitiesInterface, index: number) => (
+            <FavouriteCity
+              key={city.city}
+              city={city}
+              removeCity={removeCity}
+              index={index}
+              currentTemp={currentTemp}
+            />
+          ))
+        ) : (
+          <Typography
+            variant="h4"
+            sx={{
+              cursor: "pointer",
+              color: "white",
+              fontWeight: 600,
+              fontSize: "20px",
+            }}>
+            Add your favourite city/cities
+          </Typography>
+        )}
       </Box>
     </Box>
   );

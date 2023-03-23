@@ -12,7 +12,7 @@ import {
 interface Props {
   handleSearchValue: (search: string) => void;
   searchValue: string;
-  handleData: DebouncedFunc<(response: LocationResponseInterface[]) => void>;
+  handleData: DebouncedFunc<(response: LocationResponseInterface) => void>;
   data: LocationResponseInterface[] | null;
   handleLocation: (clickedLocation: LocationInterface) => void;
 }

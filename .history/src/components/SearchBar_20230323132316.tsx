@@ -12,8 +12,8 @@ import {
 interface Props {
   handleSearchValue: (search: string) => void;
   searchValue: string;
-  handleData: DebouncedFunc<(response: LocationResponseInterface[]) => void>;
-  data: LocationResponseInterface[] | null;
+  handleData: DebouncedFunc<(response: LocationResponseInterface) => void>;
+  data: LocationResponseInterface | null;
   handleLocation: (clickedLocation: LocationInterface) => void;
 }
 
@@ -127,34 +127,33 @@ const SearchBar = ({
             textAlign: "left",
             pt: 2,
           }}>
-          {data &&
-            data?.map((item: LocationResponseInterface) => (
-              <div key={Math.random() * 10000}>
-                <Typography
-                  onClick={() =>
-                    handleLocation({
-                      lat: item.lat,
-                      lon: item.lon,
-                      name: item.name,
-                      country: item.country,
-                      state: item.state,
-                    })
-                  }
-                  sx={{
-                    pl: 3,
-                    color: "black",
-                    cursor: "pointer",
-                    transition: "all 0.2s ease",
-                    "&:hover": {
-                      background: "#24adf180",
-                    },
-                  }}
-                  variant="body1"
-                  paragraph>
-                  {item.name}, {item.country}, {item.state}
-                </Typography>
-              </div>
-            ))}
+          {data?.map((item: LocationResponseInterface) => (
+            <div key={Math.random() * 10000}>
+              <Typography
+                onClick={() =>
+                  handleLocation({
+                    lat: item.lat,
+                    lon: item.lon,
+                    name: item.name,
+                    country: item.country,
+                    state: item.state,
+                  })
+                }
+                sx={{
+                  pl: 3,
+                  color: "black",
+                  cursor: "pointer",
+                  transition: "all 0.2s ease",
+                  "&:hover": {
+                    background: "#24adf180",
+                  },
+                }}
+                variant="body1"
+                paragraph>
+                {item.name}, {item.country}, {item.state}
+              </Typography>
+            </div>
+          ))}
         </Box>
       )}
     </Box>

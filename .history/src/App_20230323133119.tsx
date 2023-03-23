@@ -13,7 +13,9 @@ import {
 } from "./utils/fetchingData";
 
 function App() {
-  const [data, setData] = useState<LocationResponseInterface[] | null>(null);
+  const [data, setData] = useState<
+    LocationResponseInterface[] | LocationInterface | null
+  >(null);
   const [location, setLocation] = useState<LocationInterface | null>(null);
   const [weather, setWeather] = useState<CurrentWeatherInterface | null>(null);
   const [currentTemp, setCurrentTemp] = useState<CurrentTempType>("K");
@@ -23,7 +25,7 @@ function App() {
 
   const handleData = useMemo(
     () =>
-      debounce((response: LocationResponseInterface[]) => {
+      debounce((response: LocationResponseInterface) => {
         setData(response);
       }, 200),
     []

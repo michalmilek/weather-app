@@ -128,6 +128,7 @@ const SearchBar = ({
             pt: 2,
           }}>
           {data &&
+            data.isArray() &&
             data?.map((item: LocationResponseInterface) => (
               <div key={Math.random() * 10000}>
                 <Typography

@@ -4,7 +4,6 @@ import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 import { DebouncedFunc } from "lodash";
 import {
-  getData,
   LocationInterface,
   LocationResponseInterface,
 } from "../utils/fetchingData";
@@ -12,8 +11,8 @@ import {
 interface Props {
   handleSearchValue: (search: string) => void;
   searchValue: string;
-  handleData: DebouncedFunc<(response: LocationResponseInterface[]) => void>;
-  data: LocationResponseInterface[] | null;
+  handleData: DebouncedFunc<(response: LocationResponseInterface) => void>;
+  data: LocationResponseInterface | [];
   handleLocation: (clickedLocation: LocationInterface) => void;
 }
 

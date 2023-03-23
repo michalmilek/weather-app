@@ -72,6 +72,7 @@ const FavouriteCities = ({ cities, removeCity, currentTemp }: Props) => {
             <Typography
               variant="h4"
               sx={{
+                cursor: "pointer",
                 color: "white",
                 fontWeight: 600,
                 fontSize: "20px",

@@ -79,7 +79,7 @@ const Navbar = ({
   return (
     <AppBar
       sx={{
-        padding: "0 400px 0 20px",
+        padding: "0 100px",
         minHeight: "50px",
         maxWidth: "100vw",
         background: "#147FF1",

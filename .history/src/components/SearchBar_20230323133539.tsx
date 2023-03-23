@@ -12,7 +12,7 @@ import {
 interface Props {
   handleSearchValue: (search: string) => void;
   searchValue: string;
-  handleData: DebouncedFunc<(response: LocationResponseInterface[]) => void>;
+  handleData: DebouncedFunc<(response: LocationResponseInterface) => void>;
   data: LocationResponseInterface[] | null;
   handleLocation: (clickedLocation: LocationInterface) => void;
 }
@@ -128,6 +128,7 @@ const SearchBar = ({
             pt: 2,
           }}>
           {data &&
+            data.isArray() &&
             data?.map((item: LocationResponseInterface) => (
               <div key={Math.random() * 10000}>
                 <Typography

@@ -242,14 +242,7 @@ const MainContent = ({
 
             <Box
               sx={{
-                display: { lg: "grid", xl: "flex" },
-                gridTemplateColumns: {
-                  xm: "repeat(1, 1fr)",
-                  sm: "repeat(2, 1fr)",
-                  md: "repeat(3, 1fr)",
-                  lg: "repeat(4, 1fr)",
-                },
-                flexWrap: "wrap",
+                display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
                 gap: "10px",

@@ -1,11 +1,4 @@
-import {
-  FormControl,
-  InputLabel,
-  Link,
-  MenuItem,
-  Select,
-  Tab,
-} from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Select, Tab } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Tabs from "@mui/material/Tabs";
 import Toolbar from "@mui/material/Toolbar";
@@ -23,10 +16,11 @@ import {
 } from "../utils/fetchingData";
 import SearchBar from "./SearchBar";
 import { DebouncedFunc } from "lodash";
+import { Link } from "react-router-dom";
 
 interface Props {
   data: LocationResponseInterface[] | null;
-  handleData: DebouncedFunc<(response: LocationResponseInterface[]) => void>;
+  handleData: DebouncedFunc<(response: LocationResponseInterface) => void>;
   location: LocationInterface | null;
   handleLocation: (clickedLocation: LocationInterface) => void;
   weather: CurrentWeatherInterface | null;
@@ -55,7 +49,7 @@ const Navbar = ({
 
   useEffect(() => {
     const fetchData = async () => {
-      handleData((await getData(searchValue)) as LocationResponseInterface[]);
+      handleData((await getData(searchValue)) as LocationResponseInterface);
     };
 
     searchValue.length >= 3 && fetchData();
@@ -79,7 +73,6 @@ const Navbar = ({
   return (
     <AppBar
       sx={{
-        padding: "0 400px 0 20px",
         minHeight: "50px",
         maxWidth: "100vw",
         background: "#147FF1",
@@ -90,12 +83,7 @@ const Navbar = ({
           justifyContent: "space-between",
           width: "100%",
         }}>
-        <Link
-          sx={{
-            textDecoration: "none",
-            color: "white",
-          }}
-          href={"/"}>
+        <a href={"/"}>
           <Typography
             sx={{
               display: "flex",
@@ -111,7 +99,7 @@ const Navbar = ({
             />{" "}
             WeatherApp
           </Typography>
-        </Link>
+        </a>
 
         <FormControl
           sx={{
@@ -177,6 +165,21 @@ const Navbar = ({
           data={data}
           handleLocation={handleLocation}
         />
+
+        <Tabs
+          value={false}
+          sx={{ color: "white" }}>
+          <Tab
+            value={1}
+            sx={{ color: "inherit" }}
+            label="Home"
+          />
+          <Tab
+            value={2}
+            sx={{ color: "inherit" }}
+            label="About"
+          />
+        </Tabs>
       </Toolbar>
     </AppBar>
   );
