@@ -195,9 +195,11 @@ const Navbar = ({
           </Select>
         </FormControl>
         <SearchBar
-          fetchedData={fetchedData as LocationResponseInterface[] | null}
+          fetchedData={fetchedData}
           handleSearchValue={handleSearchValue}
           searchValue={searchValue}
+          handleData={handleData}
+          data={data}
           handleLocation={handleLocation}
         />
       </Toolbar>

@@ -55,7 +55,6 @@ interface Props {
   handleUpcomingDays: (response: WeatherForUpcomingDaysInterface) => void;
   loading: boolean;
   setLoading: any;
-  handleWeather: any;
 }
 
 ChartJS.register(
@@ -76,7 +75,6 @@ const MainContent = ({
   handleUpcomingDays,
   loading,
   setLoading,
-  handleWeather,
 }: Props) => {
   const [isModalOpen, setIsModalOpen] = useState(true);
   const [cities, setCities] = useState<city[] | []>(() => {
@@ -139,7 +137,6 @@ const MainContent = ({
 
   if (isSuccess) {
     console.log(fetchedData);
-    handleWeather(fetchedData);
   }
 
   const today = new Date();
@@ -229,11 +226,10 @@ const MainContent = ({
               {today.toLocaleDateString("en-GB", options)}
             </Typography>
           </>
+        ) : loading ? (
+          <CircularProgress />
         ) : (
-          "Search for your city"
-        )}
-        {isLoading && (
-          <CircularProgress sx={{ height: "50px", width: "50px" }} />
+          ""
         )}
         {weather && (
           <MainCard

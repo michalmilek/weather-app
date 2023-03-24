@@ -20,18 +20,14 @@ function App() {
   const [upcomingDays, setUpcomingDays] =
     useState<WeatherForUpcomingDaysInterface | null>(null);
   const [loading, setLoading] = useState(false);
-  /* 
+
   const handleData = useMemo(
     () =>
       debounce((response: LocationResponseInterface[]) => {
         setData(response);
       }, 200),
     []
-  ); */
-
-  const handleData = useCallback((response: LocationResponseInterface[]) => {
-    setData(response);
-  }, []);
+  );
 
   const handleWeather = useCallback((response: CurrentWeatherInterface) => {
     setWeather(response);

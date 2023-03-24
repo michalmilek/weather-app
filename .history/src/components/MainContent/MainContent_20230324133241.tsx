@@ -215,6 +215,9 @@ const MainContent = ({
           position: "relative",
           backgroundImage: `url(${Image1})`,
         }}>
+        {isLoading && (
+          <CircularProgress sx={{ height: "50px", width: "50px" }} />
+        )}
         {location ? (
           <>
             <Typography
@@ -231,9 +234,6 @@ const MainContent = ({
           </>
         ) : (
           "Search for your city"
-        )}
-        {isLoading && (
-          <CircularProgress sx={{ height: "50px", width: "50px" }} />
         )}
         {weather && (
           <MainCard

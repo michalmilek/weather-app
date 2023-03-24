@@ -12,6 +12,8 @@ import {
 interface Props {
   handleSearchValue: (search: string) => void;
   searchValue: string;
+  handleData: (response: LocationResponseInterface[]) => void;
+  data: LocationResponseInterface[] | null;
   handleLocation: (clickedLocation: LocationInterface) => void;
   fetchedData: LocationResponseInterface[] | null;
 }
@@ -20,6 +22,8 @@ const SearchBar = ({
   handleSearchValue,
   fetchedData,
   searchValue,
+  handleData,
+  data,
   handleLocation,
 }: Props) => {
   const [searchOn, setSearchOn] = useState(false);
@@ -111,7 +115,7 @@ const SearchBar = ({
         aria-label="search">
         <SearchIcon style={{ fill: "white" }} />
       </IconButton>
-      {fetchedData && searchOn && (
+      {data && searchOn && (
         <Box
           ref={completeRef}
           sx={{
@@ -125,8 +129,8 @@ const SearchBar = ({
             textAlign: "left",
             pt: 2,
           }}>
-          {fetchedData &&
-            fetchedData?.map((item: LocationResponseInterface) => (
+          {data &&
+            data?.map((item: LocationResponseInterface) => (
               <div key={Math.random() * 10000}>
                 <Typography
                   onClick={() => {

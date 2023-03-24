@@ -47,6 +47,7 @@ const FavouriteCity = ({ city, removeCity, index, currentTemp }: Props) => {
         return response;
       }
     },
+    enabled: true,
     retry: false,
   });
 
@@ -56,13 +57,8 @@ const FavouriteCity = ({ city, removeCity, index, currentTemp }: Props) => {
 
   if (isSuccess) {
     console.log(fetchedData);
+    /* setCityWeather(fetchedData as CurrentWeatherInterface); */
   }
-
-  useEffect(() => {
-    if (fetchedData) {
-      setCityWeather(fetchedData);
-    }
-  }, [fetchedData]);
 
   /* const fetchWeatherForCity = useCallback(async () => {
     setCityWeather(

@@ -12,6 +12,8 @@ import {
 interface Props {
   handleSearchValue: (search: string) => void;
   searchValue: string;
+  handleData: (response: LocationResponseInterface[]) => void;
+  data: LocationResponseInterface[] | null;
   handleLocation: (clickedLocation: LocationInterface) => void;
   fetchedData: LocationResponseInterface[] | null;
 }

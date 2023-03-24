@@ -23,31 +23,29 @@ const FavouriteCity = ({ city, removeCity, index, currentTemp }: Props) => {
 
   const {
     isLoading,
-    isError,
     data: fetchedData,
     isSuccess,
+    isError,
     error,
   } = useQuery({
     queryKey: ["favouriteCity", city.city],
     queryFn: () => {
-      if (city) {
-        const response = axios
-          .get<CurrentWeatherInterface>(
-            `https://api.openweathermap.org/data/2.5/weather?lat=${
-              city.lat
-            }&lon=${city.lon}${
-              currentTemp === "C"
-                ? "&units=metric"
-                : currentTemp === "F"
-                ? "&units=imperial"
-                : ""
-            }&appid=${process.env.REACT_APP_API_KEY}`
-          )
-          .then((res) => res.data);
-        return response;
-      }
+      const response = axios
+        .get<CurrentWeatherInterface>(
+          `https://api.openweathermap.org/data/2.5/weather?lat=${
+            city.lat
+          }&lon=${city.lon}${
+            currentTemp === "C"
+              ? "&units=metric"
+              : currentTemp === "F"
+              ? "&units=imperial"
+              : ""
+          }&appid=${process.env.REACT_APP_API_KEY}`
+        )
+        .then((res) => res.data);
+      return response;
     },
-    retry: false,
+    enabled: false,
   });
 
   if (isError) {
@@ -56,13 +54,8 @@ const FavouriteCity = ({ city, removeCity, index, currentTemp }: Props) => {
 
   if (isSuccess) {
     console.log(fetchedData);
+    setCityWeather(fetchedData);
   }
-
-  useEffect(() => {
-    if (fetchedData) {
-      setCityWeather(fetchedData);
-    }
-  }, [fetchedData]);
 
   /* const fetchWeatherForCity = useCallback(async () => {
     setCityWeather(

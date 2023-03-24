@@ -24,11 +24,10 @@ import {
 import SearchBar from "./SearchBar";
 import { DebouncedFunc } from "lodash";
 import axios from "axios";
-import useDebounce from "../hooks/useDebounce";
 
 interface Props {
   data: LocationResponseInterface[] | null;
-  handleData: (response: LocationResponseInterface[]) => void;
+  handleData: DebouncedFunc<(response: LocationResponseInterface[]) => void>;
   location: LocationInterface | null;
   handleLocation: (clickedLocation: LocationInterface) => void;
   weather: CurrentWeatherInterface | null;
@@ -57,25 +56,28 @@ const Navbar = ({
 
   const debouncedSearchValue = useDebounce(searchValue, 1000);
 
-  const { data: fetchedData, isSuccess } = useQuery({
+  const {
+    isLoading,
+    isError,
+    data: fetchedData,
+    isSuccess,
+    error,
+  } = useQuery({
     queryKey: ["searchValue", debouncedSearchValue],
     queryFn: () => {
       if (debouncedSearchValue.length >= 3) {
-        const response = getData(debouncedSearchValue).then((res) => res);
+        const response = axios
+          .get<LocationResponseInterface[]>(
+            `https://api.openweathermap.org/geo/1.0/direct?q=${searchValue}&limit=5&appid=${process.env.REACT_APP_API_KEY}`
+          )
+          .then((res) => res.data);
+        console.log(data1);
         return response;
       }
     },
     enabled: searchValue.length >= 3,
     retry: false,
   });
-  if (isSuccess) {
-    console.log(fetchedData);
-    handleData(fetchedData as LocationResponseInterface[]);
-  }
-
-  useEffect(() => {
-    console.log(location);
-  }, [location]);
 
   /* useEffect(() => {
     const fetchData = async () => {
@@ -195,9 +197,10 @@ const Navbar = ({
           </Select>
         </FormControl>
         <SearchBar
-          fetchedData={fetchedData as LocationResponseInterface[] | null}
           handleSearchValue={handleSearchValue}
           searchValue={searchValue}
+          handleData={handleData}
+          data={data}
           handleLocation={handleLocation}
         />
       </Toolbar>

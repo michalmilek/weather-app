@@ -6,9 +6,6 @@ import {
   getWeather,
 } from "../utils/fetchingData";
 import { CitiesInterface } from "./FavouriteCities";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import { CircularProgress } from "@mui/material";
 
 interface Props {
   city: CitiesInterface;
@@ -20,49 +17,6 @@ interface Props {
 const FavouriteCity = ({ city, removeCity, index, currentTemp }: Props) => {
   const [cityWeather, setCityWeather] =
     useState<CurrentWeatherInterface | null>(null);
-
-  const {
-    isLoading,
-    isError,
-    data: fetchedData,
-    isSuccess,
-    error,
-  } = useQuery({
-    queryKey: ["favouriteCity", city.city],
-    queryFn: () => {
-      if (city) {
-        const response = axios
-          .get<CurrentWeatherInterface>(
-            `https://api.openweathermap.org/data/2.5/weather?lat=${
-              city.lat
-            }&lon=${city.lon}${
-              currentTemp === "C"
-                ? "&units=metric"
-                : currentTemp === "F"
-                ? "&units=imperial"
-                : ""
-            }&appid=${process.env.REACT_APP_API_KEY}`
-          )
-          .then((res) => res.data);
-        return response;
-      }
-    },
-    retry: false,
-  });
-
-  if (isError) {
-    console.log(error);
-  }
-
-  if (isSuccess) {
-    console.log(fetchedData);
-  }
-
-  useEffect(() => {
-    if (fetchedData) {
-      setCityWeather(fetchedData);
-    }
-  }, [fetchedData]);
 
   /* const fetchWeatherForCity = useCallback(async () => {
     setCityWeather(
@@ -118,18 +72,14 @@ const FavouriteCity = ({ city, removeCity, index, currentTemp }: Props) => {
           &times;
         </Typography>
       </Box>
-      {isSuccess ? (
-        <Typography
-          sx={{
-            fontSize: "16px",
-            color: "white",
-          }}
-          variant="h5">
-          {Math.round(cityWeather?.main.temp as number)} °{currentTemp}
-        </Typography>
-      ) : (
-        <CircularProgress sx={{ height: "50px", width: "50px" }} />
-      )}
+      <Typography
+        sx={{
+          fontSize: "16px",
+          color: "white",
+        }}
+        variant="h5">
+        {Math.round(cityWeather?.main.temp as number)} °{currentTemp}
+      </Typography>
     </Box>
   );
 };

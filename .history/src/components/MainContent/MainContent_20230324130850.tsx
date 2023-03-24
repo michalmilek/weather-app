@@ -25,8 +25,6 @@ import {
   WeatherItem,
 } from "../../utils/fetchingData";
 import { CircularProgress } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 
 export interface Options {
   day: "numeric";
@@ -55,7 +53,6 @@ interface Props {
   handleUpcomingDays: (response: WeatherForUpcomingDaysInterface) => void;
   loading: boolean;
   setLoading: any;
-  handleWeather: any;
 }
 
 ChartJS.register(
@@ -76,7 +73,6 @@ const MainContent = ({
   handleUpcomingDays,
   loading,
   setLoading,
-  handleWeather,
 }: Props) => {
   const [isModalOpen, setIsModalOpen] = useState(true);
   const [cities, setCities] = useState<city[] | []>(() => {
@@ -107,40 +103,6 @@ const MainContent = ({
   useEffect(() => {
     localStorage.setItem("Cities", JSON.stringify(cities));
   }, [cities]);
-
-  const {
-    isLoading,
-    isError,
-    data: fetchedData,
-    isSuccess,
-    error,
-  } = useQuery({
-    queryKey: ["weatherFetch", location?.name],
-    queryFn: () => {
-      if (location) {
-        const response = axios
-          .get<CurrentWeatherInterface>(
-            `https://api.openweathermap.org/data/2.5/weather?lat=${
-              location.lat
-            }&lon=${location.lon}${
-              currentTemp === "C"
-                ? "&units=metric"
-                : currentTemp === "F"
-                ? "&units=imperial"
-                : ""
-            }&appid=${process.env.REACT_APP_API_KEY}`
-          )
-          .then((res) => res.data);
-        return response;
-      }
-    },
-    retry: false,
-  });
-
-  if (isSuccess) {
-    console.log(fetchedData);
-    handleWeather(fetchedData);
-  }
 
   const today = new Date();
   let daysMonthsArray = undefined;
@@ -229,11 +191,10 @@ const MainContent = ({
               {today.toLocaleDateString("en-GB", options)}
             </Typography>
           </>
+        ) : loading ? (
+          <CircularProgress />
         ) : (
-          "Search for your city"
-        )}
-        {isLoading && (
-          <CircularProgress sx={{ height: "50px", width: "50px" }} />
+          ""
         )}
         {weather && (
           <MainCard

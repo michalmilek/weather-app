@@ -198,6 +198,8 @@ const Navbar = ({
           fetchedData={fetchedData as LocationResponseInterface[] | null}
           handleSearchValue={handleSearchValue}
           searchValue={searchValue}
+          handleData={handleData}
+          data={data}
           handleLocation={handleLocation}
         />
       </Toolbar>

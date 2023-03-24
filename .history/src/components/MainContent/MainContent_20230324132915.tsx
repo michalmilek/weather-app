@@ -230,10 +230,7 @@ const MainContent = ({
             </Typography>
           </>
         ) : (
-          "Search for your city"
-        )}
-        {isLoading && (
-          <CircularProgress sx={{ height: "50px", width: "50px" }} />
+          ""
         )}
         {weather && (
           <MainCard

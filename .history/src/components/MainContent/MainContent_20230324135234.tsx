@@ -266,7 +266,7 @@ const MainContent = ({
               alignItems: "center",
               alignContent: "center",
               position: "fixed",
-              height: "100vh",
+              minHeight: "100vh",
               width: "100vw",
               top: "0",
               left: "0",

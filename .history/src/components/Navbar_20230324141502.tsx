@@ -57,7 +57,13 @@ const Navbar = ({
 
   const debouncedSearchValue = useDebounce(searchValue, 1000);
 
-  const { data: fetchedData, isSuccess } = useQuery({
+  const {
+    isLoading,
+    isError,
+    data: fetchedData,
+    isSuccess,
+    error,
+  } = useQuery({
     queryKey: ["searchValue", debouncedSearchValue],
     queryFn: () => {
       if (debouncedSearchValue.length >= 3) {
@@ -70,7 +76,7 @@ const Navbar = ({
   });
   if (isSuccess) {
     console.log(fetchedData);
-    handleData(fetchedData as LocationResponseInterface[]);
+    /*     handleData(fetchedData as LocationResponseInterface[]); */
   }
 
   useEffect(() => {
@@ -195,9 +201,10 @@ const Navbar = ({
           </Select>
         </FormControl>
         <SearchBar
-          fetchedData={fetchedData as LocationResponseInterface[] | null}
           handleSearchValue={handleSearchValue}
           searchValue={searchValue}
+          handleData={handleData}
+          data={data}
           handleLocation={handleLocation}
         />
       </Toolbar>

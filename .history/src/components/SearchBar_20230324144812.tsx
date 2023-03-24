@@ -12,6 +12,8 @@ import {
 interface Props {
   handleSearchValue: (search: string) => void;
   searchValue: string;
+  handleData: (response: LocationResponseInterface[]) => void;
+  data: LocationResponseInterface[] | null;
   handleLocation: (clickedLocation: LocationInterface) => void;
   fetchedData: LocationResponseInterface[] | null;
 }
@@ -20,6 +22,8 @@ const SearchBar = ({
   handleSearchValue,
   fetchedData,
   searchValue,
+  handleData,
+  data,
   handleLocation,
 }: Props) => {
   const [searchOn, setSearchOn] = useState(false);
