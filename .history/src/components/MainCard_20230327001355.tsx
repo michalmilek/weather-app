@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Card, CardMedia, Typography, Button } from "@mui/material";
-import { CurrentTempType } from "../utils/fetchingData";
+import {
+  CurrentTempType,
+  fetchTheWeatherForUpcomingDays,
+  WeatherForUpcomingDaysInterface,
+} from "../utils/fetchingData";
 import { city } from "./MainContent/MainContent";
 interface MainCardInterface {
   weatherIcon: string;
@@ -37,6 +41,8 @@ const MainCard = ({
   addCity,
   cities,
 }: MainCardInterface) => {
+  useEffect(() => {}, [upcomingDays]);
+
   return (
     <Card
       variant="outlined"
@@ -91,6 +97,13 @@ const MainCard = ({
       </Typography>
       <Button
         onClick={async () => {
+          handleUpcomingDays(
+            (await fetchTheWeatherForUpcomingDays(
+              location!.lat as number,
+              location!.lon as number,
+              currentTemp as CurrentTempType
+            )) as WeatherForUpcomingDaysInterface
+          );
           handleModal(true);
         }}
         variant="contained"

@@ -36,6 +36,7 @@ function App() {
   return (
     <div className="App">
       <Navbar
+        data={data}
         location={location}
         handleLocation={handleLocation}
         currentTemp={currentTemp}
@@ -43,8 +44,15 @@ function App() {
       />
 
       <MainContent
+        handleWeather={handleWeather}
+        loading={loading}
+        setLoading={setLoading}
+        data={data}
         location={location as LocationInterface}
+        weather={weather}
         currentTemp={currentTemp}
+        upcomingDays={upcomingDays as WeatherForUpcomingDaysInterface}
+        handleUpcomingDays={handleUpcomingDays}
       />
     </div>
   );

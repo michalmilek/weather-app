@@ -19,7 +19,6 @@ import { uniqBy } from "lodash";
 import {
   CurrentTempType,
   CurrentWeatherInterface,
-  fetchTheWeatherForUpcomingDays,
   getWeather,
   LocationInterface,
   LocationResponseInterface,
@@ -49,8 +48,15 @@ export interface city {
 }
 
 interface Props {
+  data: LocationResponseInterface[] | LocationInterface | null;
   location: LocationInterface | null;
+  weather: CurrentWeatherInterface | null;
   currentTemp: CurrentTempType;
+  upcomingDays: WeatherForUpcomingDaysInterface | null;
+  handleUpcomingDays: (response: WeatherForUpcomingDaysInterface) => void;
+  loading: boolean;
+  setLoading: any;
+  handleWeather: any;
 }
 
 ChartJS.register(
@@ -62,8 +68,18 @@ ChartJS.register(
   Filler
 );
 
-const MainContent = ({ location, currentTemp }: Props) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+const MainContent = ({
+  data,
+  location,
+  weather,
+  currentTemp,
+  upcomingDays,
+  handleUpcomingDays,
+  loading,
+  setLoading,
+  handleWeather,
+}: Props) => {
+  const [isModalOpen, setIsModalOpen] = useState(true);
   const [cities, setCities] = useState<city[] | []>(() => {
     const savedItem = localStorage.getItem("Cities");
     const parsedItem = JSON.parse(savedItem || "");
@@ -114,26 +130,16 @@ const MainContent = ({ location, currentTemp }: Props) => {
     retry: false,
   });
 
-  const { data: fetchedDataForUpcomingDays } = useQuery({
-    queryKey: ["weatherForUpcomingDays", location?.name],
-    queryFn: () => {
-      if (location) {
-        const response = fetchTheWeatherForUpcomingDays(
-          location!.lat,
-          location!.lon,
-          currentTemp
-        ).then((res) => res);
-        return response;
-      }
-    },
-    retry: false,
-  });
+  if (isSuccess) {
+    console.log(fetchedData);
+    handleWeather(fetchedData);
+  }
 
   const today = new Date();
   let daysMonthsArray = undefined;
   let tempArray = undefined;
-  if (fetchedDataForUpcomingDays) {
-    const days = fetchedDataForUpcomingDays?.list
+  if (upcomingDays) {
+    const days = upcomingDays?.list
       ?.filter((day: WeatherItem) => day.dt_txt.includes("12:00:00"))
       .map((day: WeatherItem) => day.dt_txt);
 
@@ -142,7 +148,7 @@ const MainContent = ({ location, currentTemp }: Props) => {
       (date: Date) => `${date.getDate() + ".0" + (date.getMonth() + 1)}`
     );
 
-    tempArray = fetchedDataForUpcomingDays?.list
+    tempArray = upcomingDays?.list
       ?.filter((day: WeatherItem) => day.dt_txt.includes("12:00:00"))
       .map((day: WeatherItem) => Math.round(day.main.temp));
   }
@@ -222,10 +228,12 @@ const MainContent = ({ location, currentTemp }: Props) => {
         {isLoading && (
           <CircularProgress sx={{ height: "50px", width: "50px" }} />
         )}
-        {fetchedData && (
+        {weather && (
           <MainCard
             cities={cities}
             addCity={addCity}
+            handleUpcomingDays={handleUpcomingDays}
+            upcomingDays={upcomingDays}
             location={location}
             weatherDesc={fetchedData?.weather[0].description}
             weatherIcon={`https://openweathermap.org/img/wn/${fetchedData?.weather[0].icon}.png`}
@@ -239,7 +247,7 @@ const MainContent = ({ location, currentTemp }: Props) => {
           />
         )}
 
-        {fetchedDataForUpcomingDays && isModalOpen && (
+        {upcomingDays && isModalOpen && (
           <Box
             sx={{
               background: "rgba(255, 255, 255, 0.6)",
@@ -278,7 +286,7 @@ const MainContent = ({ location, currentTemp }: Props) => {
                 justifyContent: "space-between",
                 gap: "10px",
               }}>
-              {fetchedDataForUpcomingDays?.list
+              {upcomingDays?.list
                 ?.filter((day: WeatherItem) => day.dt_txt.includes("12:00:00"))
                 .map((day: WeatherItem) => (
                   <SmallCard

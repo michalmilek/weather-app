@@ -132,8 +132,8 @@ const MainContent = ({ location, currentTemp }: Props) => {
   const today = new Date();
   let daysMonthsArray = undefined;
   let tempArray = undefined;
-  if (fetchedDataForUpcomingDays) {
-    const days = fetchedDataForUpcomingDays?.list
+  if (upcomingDays) {
+    const days = upcomingDays?.list
       ?.filter((day: WeatherItem) => day.dt_txt.includes("12:00:00"))
       .map((day: WeatherItem) => day.dt_txt);
 
@@ -142,7 +142,7 @@ const MainContent = ({ location, currentTemp }: Props) => {
       (date: Date) => `${date.getDate() + ".0" + (date.getMonth() + 1)}`
     );
 
-    tempArray = fetchedDataForUpcomingDays?.list
+    tempArray = upcomingDays?.list
       ?.filter((day: WeatherItem) => day.dt_txt.includes("12:00:00"))
       .map((day: WeatherItem) => Math.round(day.main.temp));
   }
@@ -226,6 +226,8 @@ const MainContent = ({ location, currentTemp }: Props) => {
           <MainCard
             cities={cities}
             addCity={addCity}
+            handleUpcomingDays={handleUpcomingDays}
+            upcomingDays={upcomingDays}
             location={location}
             weatherDesc={fetchedData?.weather[0].description}
             weatherIcon={`https://openweathermap.org/img/wn/${fetchedData?.weather[0].icon}.png`}

@@ -25,8 +25,20 @@ function App() {
     []
   ); */
 
+  const handleData = useCallback((response: LocationResponseInterface[]) => {
+    setData(response);
+  }, []);
+
+  const handleWeather = useCallback((response: CurrentWeatherInterface) => {
+    setWeather(response);
+  }, []);
+
   const handleLocation = (clickedLocation: LocationInterface) => {
     setLocation(clickedLocation);
+  };
+
+  const handleUpcomingDays = (response: WeatherForUpcomingDaysInterface) => {
+    setUpcomingDays(response);
   };
 
   const handleCurrentTemp = (temp: CurrentTempType) => {
@@ -36,15 +48,28 @@ function App() {
   return (
     <div className="App">
       <Navbar
+        loading={loading}
+        setLoading={setLoading}
+        data={data}
+        handleData={handleData}
         location={location}
         handleLocation={handleLocation}
+        weather={weather}
+        handleWeather={handleWeather}
         currentTemp={currentTemp}
         handleCurrentTemp={handleCurrentTemp}
       />
 
       <MainContent
+        handleWeather={handleWeather}
+        loading={loading}
+        setLoading={setLoading}
+        data={data}
         location={location as LocationInterface}
+        weather={weather}
         currentTemp={currentTemp}
+        upcomingDays={upcomingDays as WeatherForUpcomingDaysInterface}
+        handleUpcomingDays={handleUpcomingDays}
       />
     </div>
   );

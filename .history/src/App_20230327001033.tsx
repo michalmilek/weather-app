@@ -36,6 +36,7 @@ function App() {
   return (
     <div className="App">
       <Navbar
+        data={data}
         location={location}
         handleLocation={handleLocation}
         currentTemp={currentTemp}
@@ -43,6 +44,7 @@ function App() {
       />
 
       <MainContent
+        data={data}
         location={location as LocationInterface}
         currentTemp={currentTemp}
       />

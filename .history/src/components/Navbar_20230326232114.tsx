@@ -27,17 +27,28 @@ import axios from "axios";
 import useDebounce from "../hooks/useDebounce";
 
 interface Props {
+  data: LocationResponseInterface[] | null;
+  handleData: (response: LocationResponseInterface[]) => void;
   location: LocationInterface | null;
   handleLocation: (clickedLocation: LocationInterface) => void;
+  weather: CurrentWeatherInterface | null;
+  handleWeather: (response: CurrentWeatherInterface) => void;
   currentTemp: CurrentTempType;
   handleCurrentTemp: (temp: CurrentTempType) => void;
+  loading: boolean;
+  setLoading: any;
 }
 
 const Navbar = ({
+  data,
+  handleData,
   location,
   handleLocation,
+  handleWeather,
   currentTemp,
   handleCurrentTemp,
+  loading,
+  setLoading,
 }: Props) => {
   const [searchValue, setSearchValue] = useState("");
   const handleSearchValue = (search: string) => {

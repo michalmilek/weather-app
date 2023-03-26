@@ -36,15 +36,28 @@ function App() {
   return (
     <div className="App">
       <Navbar
+        loading={loading}
+        setLoading={setLoading}
+        data={data}
+        handleData={handleData}
         location={location}
         handleLocation={handleLocation}
+        weather={weather}
+        handleWeather={handleWeather}
         currentTemp={currentTemp}
         handleCurrentTemp={handleCurrentTemp}
       />
 
       <MainContent
+        handleWeather={handleWeather}
+        loading={loading}
+        setLoading={setLoading}
+        data={data}
         location={location as LocationInterface}
+        weather={weather}
         currentTemp={currentTemp}
+        upcomingDays={upcomingDays as WeatherForUpcomingDaysInterface}
+        handleUpcomingDays={handleUpcomingDays}
       />
     </div>
   );

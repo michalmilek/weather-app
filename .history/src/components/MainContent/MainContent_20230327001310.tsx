@@ -226,6 +226,8 @@ const MainContent = ({ location, currentTemp }: Props) => {
           <MainCard
             cities={cities}
             addCity={addCity}
+            handleUpcomingDays={handleUpcomingDays}
+            upcomingDays={upcomingDays}
             location={location}
             weatherDesc={fetchedData?.weather[0].description}
             weatherIcon={`https://openweathermap.org/img/wn/${fetchedData?.weather[0].icon}.png`}
