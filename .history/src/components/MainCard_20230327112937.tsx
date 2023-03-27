@@ -1,0 +1,111 @@
+import React from "react";
+import { Card, CardMedia, Typography, Button } from "@mui/material";
+import { CurrentTempType } from "../utils/fetchingData";
+import { city } from "./MainContent/MainContent";
+import useWeather from "../hooks/useWeather";
+interface MainCardInterface {
+  weatherIcon: string;
+  weatherDesc: string;
+  temp: number;
+  tempFeelsLike: number;
+  currentTemp: CurrentTempType;
+  pressure: number;
+  humidity: number;
+  speed: number;
+  location: {
+    lat: number;
+    lon: number;
+    name: string;
+    country: string;
+    state: string;
+  } | null;
+  addCity: (city: string, lonN: number, latN: number) => void;
+  cities: city[];
+  handleModal: (arg: boolean) => void;
+}
+
+const MainCard = ({
+  weatherIcon,
+  weatherDesc,
+  temp,
+  tempFeelsLike,
+  currentTemp,
+  pressure,
+  humidity,
+  speed,
+  location,
+  handleModal,
+  addCity,
+  cities,
+}: MainCardInterface) => {
+  const {
+    data: fetchedData,
+    isLoading,
+    isFetching,
+  } = useWeather(location, currentTemp);
+
+  return (
+    <Card
+      variant="outlined"
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        maxWidth: "350px",
+        padding: "20px 40px",
+        gap: 2,
+        background: "rgba(0, 0, 0, 0.4)",
+        border: "none",
+        borderRadius: 10,
+        color: "white",
+      }}>
+      <Button
+        onClick={() => {
+          addCity(location!.name, location!.lon, location!.lat);
+          console.log(cities);
+          console.log(location);
+        }}
+        color="info"
+        variant="outlined">
+        Add to favourite cities
+      </Button>
+      <CardMedia
+        component="img"
+        src={`https://openweathermap.org/img/wn/${fetchedData?.weather[0].icon}.png`}
+        alt={fetchedData?.weather[0].description}
+        sx={{ height: 150, width: 150 }}
+      />
+      <Typography>
+        <strong>Temperature: </strong>
+        {Math.round(fetchedData.main.temp)} °{currentTemp}
+      </Typography>
+      <Typography>
+        <strong>Perceptible Temperature: </strong>
+        {Math.round(fetchedData?.main.feels_like)} °{currentTemp}
+      </Typography>
+      <Typography>
+        <strong>Pressure: </strong>
+        {fetchedData?.main.pressure} hPa
+      </Typography>
+      <Typography>
+        <strong>Humidity: </strong>
+        {fetchedData?.main.humidity} g/m^3
+      </Typography>
+      <Typography>
+        <strong>Wind: </strong>
+        {fetchedData?.wind.speed}km/h
+      </Typography>
+      <Button
+        onClick={async () => {
+          handleModal(true);
+        }}
+        variant="contained"
+        color="secondary">
+        See the weather for upcoming days
+      </Button>
+    </Card>
+  );
+};
+
+export default MainCard;
